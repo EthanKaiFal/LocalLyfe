@@ -1,0 +1,98 @@
+{
+    "users": {
+        "userId": {
+            "firstName": "",
+            "lastName": "",
+            "email": "",
+            "zipcode": "",
+            "profilePicUrl": ""
+        },
+        "111111": {
+            "firstName": "Ethan",
+            "lastName": "Falconer",
+            "email": "",
+            "zipcode": "84115",
+            "profilePicUrl": ""
+        },
+        "222222": {
+            "firstName": "Slade",
+            "lastName": "Lim",
+            "email": "",
+            "zipcode": "84115",
+            "profilePicUrl": ""
+        }
+    },
+    "userIdeas": {
+        "userId": {
+            "ideaId1": {
+                "name": "",
+                "description": "",
+                "MAYBE-votes": "number"
+            },
+            "ideaId2": {
+                "name": "",
+                "description": "",
+                "MAYBE-votes": "number"
+            }
+        }
+    },
+    "userIdeasVoted": {
+        "userId": {
+            "ideaId1": true,
+            "ideaId2": true
+        }
+    },
+    "ideas": {
+        "ideaId": {
+            "name": "",
+            "creator": "name",
+            "created_at": "date",
+            "description": "",
+            "location": "",
+            "votes": "number"
+        },
+        "idea1": {
+            "name": "Japanese Curry",
+            "creator": "Ethan Falconer",
+            "created_at": "1/27/2024",
+            "description": "Let's get a Japanese Curry location in SLC!",
+            "location": "coordinates",
+            "votes": "100"
+        }
+
+    },
+    "ideaTags": {
+        "tagId": {
+            "ideaId1": true,
+            "ideaId2": true
+        }
+    },
+    "comments": {
+        "ideaId": {
+            "commentId": {
+                "userId": "",
+                "profilePicUrl": "",
+                "comment": "",
+                "createdAt": ""
+            }
+        },
+        "idea1": {
+            "comment1": {
+                "name": "Ethan Falconer",
+                "profilePicUrl": "...",
+                "comment": "Yeah that sounds nice.",
+                "createdAt": "datetime"
+            },
+            "comment2": {
+                "name": "Slade Lim",
+                "comment": "I love curry!",
+                "createdAt": "datetime"
+            },
+            "comment3": {
+                "name": "Ethan Falconer",
+                "comment": "Me too!",
+                "createdAt": "datetime"
+            }
+        }
+    }
+}

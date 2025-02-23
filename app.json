@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "LocalLyfe",
+    "slug": "LocalLyfe",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.LocalLyfe",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAqs3K8hoi44qysHWKIR6jC27S0g74ZbGQ"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow LocalLyfe to access your camera."
+        }
+      ]
+    ],
+    "scheme": "locallyfe",
+    "extra": {
+      "eas": {
+        "projectId": "3d73ae09-4d06-42c4-ad9d-6133227a787c"
+      }
+    },
+    "owner": "locallyfe"
+  }
+}
