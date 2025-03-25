@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TouchableOpacity, View, TextInput, Alert, KeyboardAvoidingView, Platform, Keyboard } from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import MapView, { PROVIDER_GOOGLE, Marker, LatLng } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, LatLng, PROVIDER_DEFAULT } from "react-native-maps";
 import SmallIdeaPopUp from "../HomeScreenFiles/SmallIdeaPopup";
 import ExpandedIdea from "../HomeScreenFiles/ExpandedIdea";
 import { styles } from "../HomeScreenFiles/HSStyleSheet";
@@ -190,7 +190,7 @@ const HomeScreen: React.FC = () => {
   useEffect(() => {
     getUserAdminStatus(auth.currentUser!.uid);
     getUserCouncilStatus(auth.currentUser!.uid);
-  }, [userId]); 
+  }, [userId]);
 
   useEffect(() => {
     packedRegion = originCoordinates;
@@ -214,8 +214,8 @@ const HomeScreen: React.FC = () => {
       // Perform the conversion of zip code to coordinates
       const response = await axios.get(
         "https://api.mapbox.com/geocoding/v5/mapbox.places/" +
-          originZip +
-          ".json",
+        originZip +
+        ".json",
         {
           params: {
             access_token:
@@ -419,7 +419,7 @@ const HomeScreen: React.FC = () => {
     Alert.alert("Confirm Delete", "Would you like to delete this idea?", [
       {
         text: "Cancel",
-        onPress: () => {},
+        onPress: () => { },
         style: "cancel",
       },
       { text: "Delete", onPress: () => handleDelete(marker) },
@@ -432,22 +432,22 @@ const HomeScreen: React.FC = () => {
     remove(child(directoryRef, marker.ideaId))
       .then(() => {
         //console.log("Deletion successful");
-        screenIdeas.splice(screenIdeas.indexOf(marker),1);
+        screenIdeas.splice(screenIdeas.indexOf(marker), 1);
         reRender();
       })
       .catch((error) => {
         //console.error("Error deleting value:", error);
       });
-    
+
     //delete from myIdeas
-    var userIdeasRef = ref(db, "/userIdeas/"+userId+"/"+marker.ideaId);
+    var userIdeasRef = ref(db, "/userIdeas/" + userId + "/" + marker.ideaId);
     remove(userIdeasRef)
-    .then(() => {
-      //console.log("Deletion successful");
-    })
-    .catch((error) => {
-      //console.error("Error deleting value:", error);
-    });
+      .then(() => {
+        //console.log("Deletion successful");
+      })
+      .catch((error) => {
+        //console.error("Error deleting value:", error);
+      });
 
     //delete from followIdeas
     var followedIdeasRef = ref(db, "/userIdeasFollowed");
@@ -462,16 +462,16 @@ const HomeScreen: React.FC = () => {
 
           //the ideas they follow as a list
           const targetUserIdeasFollowedList = Object.keys(childSnapshot.val());
-          if(targetUserIdeasFollowedList.includes(marker.ideaId)){
+          if (targetUserIdeasFollowedList.includes(marker.ideaId)) {
             //delete from myIdeas
-           const userFollowedIdeasRef = ref(db, "/userIdeasFollowed/"+user+"/"+marker.ideaId);
+            const userFollowedIdeasRef = ref(db, "/userIdeasFollowed/" + user + "/" + marker.ideaId);
             remove(userFollowedIdeasRef)
-            .then(() => {
-              console.log("Deletion successful");
-            })
-            .catch((error) => {
-              console.error("Error deleting value:", error);
-            });
+              .then(() => {
+                console.log("Deletion successful");
+              })
+              .catch((error) => {
+                console.error("Error deleting value:", error);
+              });
           }
         });
       } else {
@@ -480,11 +480,11 @@ const HomeScreen: React.FC = () => {
     }).catch((error) => {
       console.error("Error getting data:", error);
     });
-    
 
 
 
-    
+
+
     //userIdsVoted remove that one 
     var userIdeasVotedRef = ref(db, "/userIdeasVoted");
     //going through each of the users
@@ -498,16 +498,16 @@ const HomeScreen: React.FC = () => {
 
           //the ideas they follow as a list
           const targetUserIdeasVotedList = Object.keys(childSnapshot.val());
-          if(targetUserIdeasVotedList.includes(marker.ideaId)){
+          if (targetUserIdeasVotedList.includes(marker.ideaId)) {
             //delete from myIdeas
-           const userVotedIdeasRef = ref(db, "/userIdeasVoted/"+user+"/"+marker.ideaId);
+            const userVotedIdeasRef = ref(db, "/userIdeasVoted/" + user + "/" + marker.ideaId);
             remove(userVotedIdeasRef)
-            .then(() => {
-              console.log("Deletion successful");
-            })
-            .catch((error) => {
-              console.error("Error deleting value:", error);
-            });
+              .then(() => {
+                console.log("Deletion successful");
+              })
+              .catch((error) => {
+                console.error("Error deleting value:", error);
+              });
           }
         });
       } else {
@@ -516,10 +516,10 @@ const HomeScreen: React.FC = () => {
     }).catch((error) => {
       console.error("Error getting data:", error);
     });
-    
 
 
-// Get the snapshot of the query result
+
+    // Get the snapshot of the query result
 
 
     //close out the small popup
@@ -536,8 +536,8 @@ const HomeScreen: React.FC = () => {
       .then(() => {
         console.log("Deletion successful");
         const indexOfComment = marker.comments?.indexOf(comment);
-        if (indexOfComment !== undefined){
-        marker.comments?.splice(indexOfComment,1);
+        if (indexOfComment !== undefined) {
+          marker.comments?.splice(indexOfComment, 1);
         }
       })
       .catch((error) => {
@@ -545,7 +545,7 @@ const HomeScreen: React.FC = () => {
       });
   };
 
-  
+
 
   const onCommentUpVoteClick = (selectedMarker: Idea, comment: Comment) => {
     var cvoted = [...isCVoted];
@@ -623,19 +623,19 @@ const HomeScreen: React.FC = () => {
     };
     const newCommentRef = await push(ref(db, commentIdeaPath), newComment);
     const commentId = newCommentRef.key;
-    if(marker.creator != userId) {
-        // Add a follow notification to the database
-        const notificationRef = ref(db, `/notifications/${marker.creator}`);
-        const newNotification = {
-          type: "comment",
-          content: commentText,
-          ideaId: marker.ideaId,
-          timestamp: Date.now(),
-          followerName: CuserName,
-          ideaTitle: marker.name,
-          profilePic: profilePictureUrl,
-        };
-        push(notificationRef, newNotification);
+    if (marker.creator != userId) {
+      // Add a follow notification to the database
+      const notificationRef = ref(db, `/notifications/${marker.creator}`);
+      const newNotification = {
+        type: "comment",
+        content: commentText,
+        ideaId: marker.ideaId,
+        timestamp: Date.now(),
+        followerName: CuserName,
+        ideaTitle: marker.name,
+        profilePic: profilePictureUrl,
+      };
+      push(notificationRef, newNotification);
     }
 
 
@@ -665,13 +665,13 @@ const HomeScreen: React.FC = () => {
       <MapView
         key={`${screenIdeas.length}-${originCoordinates.latitude}-${originCoordinates.longitude}`}
         ref={mapViewRef}
-        provider={PROVIDER_GOOGLE}
+        provider={PROVIDER_DEFAULT}
         style={styles.map}
         initialRegion={region ? region : originCoordinates}
         zoomTapEnabled={false}
       >
         {screenIdeas &&
-          screenIdeas.map((marker, index) => (
+          screenIdeas.filter(marker => marker?.location).map((marker, index) => (
             <Marker
               key={index}
               coordinate={marker.location}
@@ -683,32 +683,34 @@ const HomeScreen: React.FC = () => {
             />
           ))}
       </MapView>
-      <KeyboardAvoidingView style={{    position: "absolute",
-    backgroundColor: "#E6E6E6",
-    width: "100%",
-    height: 50,}}
-      behavior={Platform.OS === "ios" ? "position" : "height"}
-      keyboardVerticalOffset={100}>
+      <KeyboardAvoidingView style={{
+        position: "absolute",
+        backgroundColor: "#E6E6E6",
+        width: "100%",
+        height: 50,
+      }}
+        behavior={Platform.OS === "ios" ? "position" : "height"}
+        keyboardVerticalOffset={100}>
 
-      <View style={styles.searchBox}>
-        <TextInput
-          placeholder="Search Idea..."
-          style={styles.searchBar}
-          value={searchValue}
-          onChangeText={(text) => setSearchValue(text)}
-        />
-        <TouchableOpacity
-          style={styles.icon}
-          onPress={async () => {
-            Keyboard.dismiss();
-            setIsSearched(true);
-            setSelectedMarker(null);
-            setBoundaries(await (mapViewRef.current as any).getMapBoundaries());
-          }}
-        >
-          <FontAwesome name="search" size={20} color={"#989898"} />
-        </TouchableOpacity>
-      </View>
+        <View style={styles.searchBox}>
+          <TextInput
+            placeholder="Search Idea..."
+            style={styles.searchBar}
+            value={searchValue}
+            onChangeText={(text) => setSearchValue(text)}
+          />
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={async () => {
+              Keyboard.dismiss();
+              setIsSearched(true);
+              setSelectedMarker(null);
+              setBoundaries(await (mapViewRef.current as any).getMapBoundaries());
+            }}
+          >
+            <FontAwesome name="search" size={20} color={"#989898"} />
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
       {/* small idea popup */}
       {selectedMarker && (
